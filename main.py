@@ -53,7 +53,7 @@ class App(customtkinter.CTk):
         # Include Emails
         switch_var = customtkinter.StringVar(value="off")
         self.inc_emails = customtkinter.CTkSwitch(self, text="Inc. Emails", command=self.switch_event, 
-                                                  variable=switch_var, onvalue="on", offvalue="off")
+                                                variable=switch_var, onvalue="on", offvalue="off")
         self.inc_emails.grid(row=0, column=3, padx=10, pady=10, sticky="ew")
         
         self.checkbox_frame_1 = MyCheckboxFrame(self, "Values", values=["value 1", "value 2", "value 3"])
