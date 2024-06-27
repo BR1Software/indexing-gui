@@ -1,10 +1,11 @@
 import customtkinter
 import os
+import requests
 from dotenv import load_dotenv
 
 load_dotenv()
-
 server_url = os.getenv("SERVER_URL")
+print("Server URL:", server_url)
 
 class MyCheckboxFrame(customtkinter.CTkFrame):
     def __init__(self, master, title, values):
@@ -30,9 +31,9 @@ class MyCheckboxFrame(customtkinter.CTkFrame):
         return checked_checkboxes
         
 class App(customtkinter.CTk):
+    global server_url
     def __init__(self):
         super().__init__()
-
         self.title("Indexer GUI")
         self.geometry("800x600")
         self.grid_columnconfigure((1), weight=1)
@@ -66,6 +67,18 @@ class App(customtkinter.CTk):
         
     def search_button_callback(self):
         print("Search:", self.search_entry.get())
+        search_entry_content = self.search_entry.get()
+        url = f"{server_url}/search"
+        data = {'query': search_entry_content}
+        response = requests.post(url, json=data)
+        if response.status_code == 200:
+            print("Request successful.")
+            # Process the response data (if needed)
+            response_data = response.json()
+            print(response.status_code)
+            print(response_data)
+        else:
+            print("Request failed with status code:", response.status_code)
     
     def button_callback(self):
         print("checkbox_frame_1:", self.checkbox_frame_1.get())
